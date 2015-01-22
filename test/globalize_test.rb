@@ -84,6 +84,12 @@ class GlobalizeTest < MiniTest::Spec
         assert_translated post, :en, :title, 'title'
         assert_translated post, :de, :title, 'Titel'
       end
+
+      it "fails with invalid attributes and an explicit locale" do
+        post = Post.create(:title => 'Title', locale: :en)
+
+        refute post.update_attributes(:title => nil, locale: :de)
+      end
     end
 
     describe '#reload' do
